@@ -36,12 +36,35 @@ def create_param1_table(param1_series, candidate_series):
     final_df.to_csv("output/" + parameter1 + ".csv")
 
 
+def create_param2_table(param2_series, candidate_series):
+    answer = {}
+    index = 0
+
+    for item in param2_series:
+        if item not in answer:
+            answer[item] = []
+        answer[item].append(candidate_series[index])
+        index += 1
+
+    final_dict = {}
+    for key in answer.keys():
+        final_dict[key]={}
+
+        for id in answer[key]:
+            final_dict[key][id] = answer[key].count(id)*100.00/len(answer[key])
+
+    final_df = pd.DataFrame(final_dict)
+    #print final_df
+    final_df.to_csv("output/" + parameter2 + ".csv")
+
+
 if __name__ == "__main__":
     data = pd.read_csv("raw_data.csv")
 
     data.dropna().to_csv("clean_data.csv", index=False)
     clean_data = pd.read_csv("clean_data.csv")
 
-    create_param1_table(clean_data[parameter1], clean_data[candidate_param])
+    # create_param1_table(clean_data[parameter1], clean_data[candidate_param])
+    create_param2_table(clean_data[parameter2], clean_data[candidate_param])
 
     #  print clean_data
