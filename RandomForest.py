@@ -58,6 +58,40 @@ def create_param2_table(param2_series, candidate_series):
     final_df.to_csv("output/" + parameter2 + ".csv")
 
 
+def create_param3_table(param3_series, candidate_series):
+    pass
+
+
+def get_vote_avg(no):
+    if 0.0 <= no <= 3.0:
+        return "Bad"
+    elif 3.0 <= no <= 5.0:
+        return "Average"
+    elif 5.0 <= no <= 7.0:
+        return "Good"
+    else:
+        return "Great"
+
+
+def create_param4_table(param4_series, candidate_series):
+    answer = {"Bad": [], "Average": [], "Good": [],"Great":[]}
+
+    for i in range(len(param4_series)):
+        vote_avg = get_vote_avg(float(param4_series[i]))
+        answer[vote_avg].append(candidate_series[i])
+
+    final_dict = {}
+    for key in answer.keys():
+        final_dict[key] = {}
+
+        for id in answer[key]:
+            final_dict[key][id] = answer[key].count(id) * 100.00 / len(answer[key])
+
+    final_df = pd.DataFrame(final_dict)
+    #print final_df
+    final_df.to_csv("output/" + parameter4 + ".csv")
+
+
 if __name__ == "__main__":
     data = pd.read_csv("raw_data.csv")
 
@@ -65,6 +99,8 @@ if __name__ == "__main__":
     clean_data = pd.read_csv("clean_data.csv")
 
     # create_param1_table(clean_data[parameter1], clean_data[candidate_param])
-    create_param2_table(clean_data[parameter2], clean_data[candidate_param])
+    # create_param2_table(clean_data[parameter2], clean_data[candidate_param])
+    # create_param3_table(clean_data[parameter3], clean_data[candidate_param])
+    create_param4_table(clean_data[parameter4], clean_data[candidate_param])
 
     #  print clean_data
