@@ -48,18 +48,56 @@ def create_param2_table(param2_series, candidate_series):
 
     final_dict = {}
     for key in answer.keys():
-        final_dict[key]={}
+        final_dict[key] = {}
 
         for id in answer[key]:
-            final_dict[key][id] = answer[key].count(id)*100.00/len(answer[key])
+            final_dict[key][id] = answer[key].count(id) * 100.00 / len(answer[key])
 
     final_df = pd.DataFrame(final_dict)
-    #print final_df
+    # print final_df
     final_df.to_csv("output/" + parameter2 + ".csv")
 
 
+def get_popularity(no):
+    if 0.0 <= no < 1.5:
+        return 1.0
+    elif 1.5 <= no < 2:
+        return 1.5
+    elif 2 <= no < 2.5:
+        return 2.0
+    elif 2.5 <= no < 3.0:
+        return 2.5
+    elif 3.0 <= no < 3.5:
+        return 3.0
+    elif 3.5 <= no < 4.0:
+        return 3.5
+    elif 4.0 <= no < 4.5:
+        return 4.0
+    elif 4.5 <= no < 5.0:
+        return 4.5
+    else:
+        return 5
+
+
 def create_param3_table(param3_series, candidate_series):
-    pass
+    answer = {}
+
+    for i in range(len(param3_series)):
+        vote_avg = get_popularity(float(param3_series[i]))
+        if vote_avg not in answer:
+            answer[vote_avg] = []
+        answer[vote_avg].append(candidate_series[i])
+
+    final_dict = {}
+    for key in answer.keys():
+        final_dict[key] = {}
+
+        for id in answer[key]:
+            final_dict[key][id] = answer[key].count(id) * 100.00 / len(answer[key])
+
+    final_df = pd.DataFrame(final_dict)
+    # print final_df
+    final_df.to_csv("output/" + parameter3 + ".csv")
 
 
 def get_vote_avg(no):
@@ -74,7 +112,7 @@ def get_vote_avg(no):
 
 
 def create_param4_table(param4_series, candidate_series):
-    answer = {"Bad": [], "Average": [], "Good": [],"Great":[]}
+    answer = {"Bad": [], "Average": [], "Good": [], "Great": []}
 
     for i in range(len(param4_series)):
         vote_avg = get_vote_avg(float(param4_series[i]))
@@ -88,19 +126,19 @@ def create_param4_table(param4_series, candidate_series):
             final_dict[key][id] = answer[key].count(id) * 100.00 / len(answer[key])
 
     final_df = pd.DataFrame(final_dict)
-    #print final_df
+    # print final_df
     final_df.to_csv("output/" + parameter4 + ".csv")
 
 
 if __name__ == "__main__":
-    data = pd.read_csv("raw_data.csv")
+    # data = pd.read_csv("input/raw_data.csv")
 
-    data.dropna().to_csv("clean_data.csv", index=False)
-    clean_data = pd.read_csv("clean_data.csv")
+    # data.dropna().to_csv("clean_data.csv", index=False)
+    clean_data = pd.read_csv("input/clean_data.csv")
 
-    # create_param1_table(clean_data[parameter1], clean_data[candidate_param])
-    # create_param2_table(clean_data[parameter2], clean_data[candidate_param])
-    # create_param3_table(clean_data[parameter3], clean_data[candidate_param])
+    create_param1_table(clean_data[parameter1], clean_data[candidate_param])
+    create_param2_table(clean_data[parameter2], clean_data[candidate_param])
+    create_param3_table(clean_data[parameter3], clean_data[candidate_param])
     create_param4_table(clean_data[parameter4], clean_data[candidate_param])
 
     #  print clean_data
