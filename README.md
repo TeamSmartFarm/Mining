@@ -1,0 +1,2 @@
+# Mining
+Random Forest Algorithm
