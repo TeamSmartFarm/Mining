@@ -33,7 +33,7 @@ def create_param1_table(param1_series, candidate_series):
 
     final_df = pd.DataFrame(final_dict)
     # print final_df
-    final_df.to_csv("output/" + parameter1 + ".csv")
+    final_df.to_csv("output/" + parameter1 + ".csv",index_label="id")
 
 
 def create_param2_table(param2_series, candidate_series):
@@ -55,7 +55,7 @@ def create_param2_table(param2_series, candidate_series):
 
     final_df = pd.DataFrame(final_dict)
     # print final_df
-    final_df.to_csv("output/" + parameter2 + ".csv")
+    final_df.to_csv("output/" + parameter2 + ".csv",index_label="id")
 
 
 def get_popularity(no):
@@ -97,7 +97,7 @@ def create_param3_table(param3_series, candidate_series):
 
     final_df = pd.DataFrame(final_dict)
     # print final_df
-    final_df.to_csv("output/" + parameter3 + ".csv")
+    final_df.to_csv("output/" + parameter3 + ".csv",index_label="id")
 
 
 def get_vote_avg(no):
@@ -127,7 +127,7 @@ def create_param4_table(param4_series, candidate_series):
 
     final_df = pd.DataFrame(final_dict)
     # print final_df
-    final_df.to_csv("output/" + parameter4 + ".csv")
+    final_df.to_csv("output/" + parameter4 + ".csv",index_label="id")
 
 
 if __name__ == "__main__":
